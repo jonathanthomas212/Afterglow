@@ -1,0 +1,25 @@
+Afterglow/Config.xcconfig
+.DS_Store
+
+# Xcode specific
+*.xcuserdata/
+*.xcuserstate
+*.xcscheme
+*.xcuserdatad/
+
+# Build results
+build/
+DerivedData/
+
+# CocoaPods
+Pods/
+
+# Swift Package Manager
+Package.resolved
+
+# Log files
+*.log
+
+# Editor specific
+*.swp
+
