@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     
+    //auto update published variables from view model
+    @StateObject private var viewModel = PredictionsViewModel()
+    
     
     var body: some View {
         
@@ -22,19 +25,19 @@ struct ContentView: View {
             VStack {
                 Spacer()
                 Text("Cloud cover")
-                Text("???")
+                Text(viewModel.cloudCover)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 Spacer()
                 Text("Visibility")
-                Text("???")
+                Text(viewModel.visibility)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 Spacer()
                 Text("Pressure")
-                Text("???")
+                Text(viewModel.pressure)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 Spacer()
                 Text("Humidity")
-                Text("???")
+                Text(viewModel.humidity)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 Spacer()
             }
@@ -42,9 +45,7 @@ struct ContentView: View {
         .padding()
         }.onAppear {
             Task {
-                let apiClient = APIClient()
-                //hardcoded lon, lat for now
-                let result = try await apiClient.getWeatherForLocation(43.581552,-79.788750)
+                await viewModel.getPredictions()
             }
         }
     }
@@ -56,4 +57,5 @@ struct ContentView: View {
 
 extension Color {
     static let darkBlue = Color(red: 0.1, green: 0.1, blue: 0.5) // Custom dark blue color
+    static let darkOrange = Color(red: 0.8627, green: 0.6588, blue: 0.4235) // Custom dark orange color
 }

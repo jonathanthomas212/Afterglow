@@ -16,6 +16,7 @@
 		42B7ED582C48977900F96C07 /* AfterglowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B7ED572C48977900F96C07 /* AfterglowTests.swift */; };
 		42B7ED622C48977900F96C07 /* AfterglowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B7ED612C48977900F96C07 /* AfterglowUITests.swift */; };
 		42B7ED642C48977900F96C07 /* AfterglowUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B7ED632C48977900F96C07 /* AfterglowUITestsLaunchTests.swift */; };
+		42CC44662C6D92F800C57B0B /* PredictionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC44652C6D92F800C57B0B /* PredictionsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		42B7ED5D2C48977900F96C07 /* AfterglowUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AfterglowUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		42B7ED612C48977900F96C07 /* AfterglowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterglowUITests.swift; sourceTree = "<group>"; };
 		42B7ED632C48977900F96C07 /* AfterglowUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterglowUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		42CC44652C6D92F800C57B0B /* PredictionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 		4289DD652C584746003E8778 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				42CC44652C6D92F800C57B0B /* PredictionsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -301,6 +304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42CC44662C6D92F800C57B0B /* PredictionsViewModel.swift in Sources */,
 				42A6D4D32C5852A70037DD90 /* Weather.swift in Sources */,
 				42B7ED482C48977700F96C07 /* ContentView.swift in Sources */,
 				42B7ED462C48977700F96C07 /* AfterglowApp.swift in Sources */,
