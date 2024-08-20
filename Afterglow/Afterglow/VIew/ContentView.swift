@@ -24,6 +24,10 @@ struct ContentView: View {
             
             VStack {
                 Spacer()
+                Text("Event")
+                Text(viewModel.event)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                Spacer()
                 Text("Cloud cover")
                 Text(viewModel.cloudCover)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)

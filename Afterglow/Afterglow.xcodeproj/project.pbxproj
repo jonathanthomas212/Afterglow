@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		425E36E42C7042BD00560649 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6D4D02C5849770037DD90 /* APIClient.swift */; };
+		425E36E52C7042C100560649 /* PredictionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC44652C6D92F800C57B0B /* PredictionsViewModel.swift */; };
+		425E36E62C7042C900560649 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6D4D22C5852A70037DD90 /* Weather.swift */; };
 		42A6D4D12C5849770037DD90 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6D4D02C5849770037DD90 /* APIClient.swift */; };
 		42A6D4D32C5852A70037DD90 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42A6D4D22C5852A70037DD90 /* Weather.swift */; };
 		42B7ED462C48977700F96C07 /* AfterglowApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B7ED452C48977700F96C07 /* AfterglowApp.swift */; };
@@ -316,7 +319,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				425E36E62C7042C900560649 /* Weather.swift in Sources */,
 				42B7ED582C48977900F96C07 /* AfterglowTests.swift in Sources */,
+				425E36E42C7042BD00560649 /* APIClient.swift in Sources */,
+				425E36E52C7042C100560649 /* PredictionsViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

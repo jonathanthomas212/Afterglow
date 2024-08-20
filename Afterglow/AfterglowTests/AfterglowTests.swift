@@ -1,35 +1,48 @@
-//
-//  AfterglowTests.swift
-//  AfterglowTests
-//
-//  Created by Jonathan Thomas on 2024-07-17.
-//
-
 import XCTest
+import Afterglow
 
 final class AfterglowTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
+    var weather: WeatherModel?
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
+    func testGetHourly() {
+        // Create an expectation
+        let expectation = self.expectation(description: "Fetch weather data")
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        measure {
-            // Put the code you want to measure the time of here.
+        // Fetch weather data asynchronously
+        let instance = APIClient()
+        Task {
+            do {
+                self.weather = try await instance.getWeatherForLocation(43.581552, -79.788750)
+                expectation.fulfill() // Fulfill the expectation when the weather data is successfully fetched
+            } catch {
+                XCTFail("Failed to fetch weather data: \(error)")
+            }
         }
-    }
 
+        // Wait for the expectation to be fulfilled
+        waitForExpectations(timeout: 10) { error in
+            if let error = error {
+                XCTFail("Expectation failed with error: \(error)")
+            }
+        }
+
+        // Ensure weather data is available before running the test
+        guard let weather = self.weather else {
+            XCTFail("Weather data is nil")
+            return
+        }
+
+        let predictionsInstance = PredictionsViewModel()
+        let result = predictionsInstance.getHourly(weather)
+        XCTAssertEqual(predictionsInstance.event, "Sunrise", "Expected event to be 'Sunset' when current time is between sunrise and sunset.")
+        
+        let resultDate = predictionsInstance.unixToLocalTime(result.dt)
+        let resultHour = String(resultDate[resultDate.index(resultDate.startIndex, offsetBy: 11)..<resultDate.index(resultDate.startIndex, offsetBy: 13)])
+        
+        XCTAssertEqual(resultHour, "06", "Sunrise hour is currently 06")
+        
+        
+    }
 }
+
