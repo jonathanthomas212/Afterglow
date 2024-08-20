@@ -16,14 +16,21 @@ class PredictionsViewModel: ObservableObject {
     @Published var humidity: String = "Loading..."
     @Published var event: String = "Loading..." //sunset or sunrise
     
+    
+    
     func getPredictions() async {
         
         //fetch weather data
         let apiClient = APIClient()
         
         do {
-            //hardcoded lon, lat for now
-            let result = try await apiClient.getWeatherForLocation(43.581552,-79.788750)
+            //Calculate west of location, hardcoded lat/lon for now
+            let lat = 43.581552
+            let lon = -79.788750
+            let newLon = self.westOf(lat, lon)
+            
+            
+            let result = try await apiClient.getWeatherForLocation(lat, newLon)
             DispatchQueue.main.async {
                 
                 //get forecast for sunset/sunrise hour
@@ -82,6 +89,8 @@ class PredictionsViewModel: ObservableObject {
         
     }
     
+    
+    
     //calculate golden and blue hour and set the labels
     func getGoldenBlueHourTimes() {
         
@@ -90,6 +99,8 @@ class PredictionsViewModel: ObservableObject {
     func getSunsetPrediction() {
         
     }
+    
+    
     
     func unixToLocalTime(_ unixTime: Int) -> String {
         
@@ -103,4 +114,21 @@ class PredictionsViewModel: ObservableObject {
         return localTime
     }
     
+    
+    
+    func westOf(_ latitude: Double, _ longitude: Double) -> Double {
+        let earthRadius = 6371.0 // Earth's radius in kilometers
+        let distance = 4.0 // Distance in kilometers
+        
+        // Convert latitude from degrees to radians
+        let latRad = latitude * .pi / 180
+        
+        // Calculate the change in longitude
+        let deltaLon = distance / (earthRadius * cos(latRad))
+        
+        // Subtract deltaLon to get the new longitude 5 km west
+        let newLongitude = longitude - (deltaLon * 180 / .pi)
+        
+        return newLongitude
+    }
 }

@@ -42,7 +42,17 @@ final class AfterglowTests: XCTestCase {
         
         XCTAssertEqual(resultHour, "06", "Sunrise hour is currently 06")
         
+    }
+    
+    
+    func testwestOf() {
+        let lat = 43.581552
+        let lon = -79.788750
         
+        let instance = PredictionsViewModel()
+        let newLon = instance.westOf(43.581552,-79.788750)
+        
+        XCTAssertEqual(newLon, -79.85082407651882, accuracy: 0.01)
     }
 }
 
