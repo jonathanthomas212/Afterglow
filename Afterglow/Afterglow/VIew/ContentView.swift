@@ -44,6 +44,10 @@ struct ContentView: View {
                 Text(viewModel.humidity)
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                 Spacer()
+                Text("Golden Hour")
+                Text(viewModel.goldenHour)
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                Spacer()
             }
             .foregroundColor(Color.white)
         .padding()

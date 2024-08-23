@@ -15,6 +15,7 @@ class PredictionsViewModel: ObservableObject {
     @Published var pressure: String = "Loading..."
     @Published var humidity: String = "Loading..."
     @Published var event: String = "Loading..." //sunset or sunrise
+    @Published var goldenHour: String = "Loading..."
     
     
     
@@ -23,17 +24,25 @@ class PredictionsViewModel: ObservableObject {
         //fetch weather data
         let apiClient = APIClient()
         
+        //Calculate west of location, hardcoded lat/lon for now
+        let lat = 43.581552
+        let lon = -79.788750
+        let newLon = self.westOf(lat, lon)
+        
         do {
-            //Calculate west of location, hardcoded lat/lon for now
-            let lat = 43.581552
-            let lon = -79.788750
-            let newLon = self.westOf(lat, lon)
             
+            //fetch golden/blue hour times
+            let light = try await apiClient.getLightInfoForLocation(lat,newLon)
             
+            //fetch weather data
             let result = try await apiClient.getWeatherForLocation(lat, newLon)
+            
+            
+            
+            //ui updates
             DispatchQueue.main.async {
                 
-                //get forecast for sunset/sunrise hour
+                //get forecast for sunset/sunrise hour (ui update in function)
                 let hourlyForecast = self.getHourly(result)
                 print("forecast for: ", self.unixToLocalTime(hourlyForecast.dt))
                 print(hourlyForecast)
@@ -43,10 +52,12 @@ class PredictionsViewModel: ObservableObject {
                 self.visibility = String(hourlyForecast.visibility ?? 0) //for some reason the api sometimes doesnt include visibility??
                 self.pressure = String(hourlyForecast.pressure)
                 self.humidity = String(hourlyForecast.humidity)
+                self.goldenHour = String(light.results.goldenHour)
             }
             
         } catch {
             DispatchQueue.main.async {
+                print(error)
                 self.cloudCover = "Failed to fetch weather data"
             }
             
@@ -101,7 +112,7 @@ class PredictionsViewModel: ObservableObject {
     }
     
     
-    
+    //util function mostly used for debugging
     func unixToLocalTime(_ unixTime: Int) -> String {
         
         let utc = Date(timeIntervalSince1970: TimeInterval(unixTime))
@@ -115,7 +126,7 @@ class PredictionsViewModel: ObservableObject {
     }
     
     
-    
+    //set coordinates x km west to foucs on clouds in the horizon
     func westOf(_ latitude: Double, _ longitude: Double) -> Double {
         let earthRadius = 6371.0 // Earth's radius in kilometers
         let distance = 4.0 // Distance in kilometers

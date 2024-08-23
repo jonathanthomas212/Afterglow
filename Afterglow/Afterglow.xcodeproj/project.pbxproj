@@ -20,6 +20,8 @@
 		42B7ED622C48977900F96C07 /* AfterglowUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B7ED612C48977900F96C07 /* AfterglowUITests.swift */; };
 		42B7ED642C48977900F96C07 /* AfterglowUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42B7ED632C48977900F96C07 /* AfterglowUITestsLaunchTests.swift */; };
 		42CC44662C6D92F800C57B0B /* PredictionsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CC44652C6D92F800C57B0B /* PredictionsViewModel.swift */; };
+		42E3CDDB2C76D768007C329E /* LightInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E3CDDA2C76D768007C329E /* LightInfo.swift */; };
+		42E3CDDC2C76D768007C329E /* LightInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42E3CDDA2C76D768007C329E /* LightInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +58,7 @@
 		42B7ED612C48977900F96C07 /* AfterglowUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterglowUITests.swift; sourceTree = "<group>"; };
 		42B7ED632C48977900F96C07 /* AfterglowUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterglowUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		42CC44652C6D92F800C57B0B /* PredictionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictionsViewModel.swift; sourceTree = "<group>"; };
+		42E3CDDA2C76D768007C329E /* LightInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				42A6D4D22C5852A70037DD90 /* Weather.swift */,
+				42E3CDDA2C76D768007C329E /* LightInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -311,6 +315,7 @@
 				42A6D4D32C5852A70037DD90 /* Weather.swift in Sources */,
 				42B7ED482C48977700F96C07 /* ContentView.swift in Sources */,
 				42B7ED462C48977700F96C07 /* AfterglowApp.swift in Sources */,
+				42E3CDDB2C76D768007C329E /* LightInfo.swift in Sources */,
 				42A6D4D12C5849770037DD90 /* APIClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -321,6 +326,7 @@
 			files = (
 				425E36E62C7042C900560649 /* Weather.swift in Sources */,
 				42B7ED582C48977900F96C07 /* AfterglowTests.swift in Sources */,
+				42E3CDDC2C76D768007C329E /* LightInfo.swift in Sources */,
 				425E36E42C7042BD00560649 /* APIClient.swift in Sources */,
 				425E36E52C7042C100560649 /* PredictionsViewModel.swift in Sources */,
 			);

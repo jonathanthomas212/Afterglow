@@ -71,4 +71,26 @@ class APIClient: NSObject {
         
     }
     
+    
+    
+    func getLightInfoForLocation(_ lat:Double, _ lon:Double) async throws -> LightInfoModel {
+        
+        //build url
+        let baseurl = "https://api.sunrisesunset.io/json?"
+        
+        
+        let url = baseurl + "lat=" + String(lat) + "&lng=" + String(lon)
+        
+        
+        //call get request func
+        let light:LightInfoModel = try await fetchData(url)
+        
+        if light.status == "OK" {
+            return light
+        } else {
+            throw APIError.badResponse
+        }
+        
+    }
+    
 }
