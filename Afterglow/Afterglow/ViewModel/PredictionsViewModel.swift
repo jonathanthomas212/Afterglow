@@ -37,6 +37,10 @@ class PredictionsViewModel: ObservableObject {
             //fetch weather data
             let result = try await apiClient.getWeatherForLocation(lat, newLon)
             
+            //get golden/blue hour times
+            let lightTimes = self.getGoldenBlueHourTimes(light)
+            print("light times: ", lightTimes)
+            
             
             
             //ui updates
@@ -52,7 +56,7 @@ class PredictionsViewModel: ObservableObject {
                 self.visibility = String(hourlyForecast.visibility ?? 0) //for some reason the api sometimes doesnt include visibility??
                 self.pressure = String(hourlyForecast.pressure)
                 self.humidity = String(hourlyForecast.humidity)
-                self.goldenHour = String(light.results.goldenHour)
+                self.goldenHour = lightTimes["goldenHourStart"]!
             }
             
         } catch {
@@ -97,19 +101,61 @@ class PredictionsViewModel: ObservableObject {
             }
         }
         return weather.hourly[0]
-        
     }
     
     
     
     //calculate golden and blue hour and set the labels
-    func getGoldenBlueHourTimes() {
+    func getGoldenBlueHourTimes(_ lightInfo: LightInfoModel) -> [String:String] {
         
+        var times = [String:String]()
+        var twilight: Date
+        var goldenHourStart: Date
+        var goldenHourEnd: Date
+        var blueHourStart: Date
+        var blueHourEnd: Date
+        
+        let inputFormatter = DateFormatter()
+        inputFormatter.dateFormat = "hh:mm:ss a"
+        
+        if self.event == "Sunset" {
+            
+            goldenHourStart = inputFormatter.date(from: lightInfo.results.goldenHour)!
+            goldenHourEnd = inputFormatter.date(from: lightInfo.results.sunset)!
+            twilight = inputFormatter.date(from: lightInfo.results.sunset)!
+            blueHourStart = inputFormatter.date(from: lightInfo.results.sunset)!
+            blueHourEnd = inputFormatter.date(from: lightInfo.results.dusk)!.addingTimeInterval(-10 * 60)
+            
+        } else { //sunrise
+            
+            blueHourStart = inputFormatter.date(from: lightInfo.results.dawn)!.addingTimeInterval(10 * 60)
+            blueHourEnd = inputFormatter.date(from: lightInfo.results.sunrise)!
+            twilight = inputFormatter.date(from: lightInfo.results.sunrise)!
+            goldenHourStart = inputFormatter.date(from: lightInfo.results.sunrise)!
+            
+            let goldenHourDuration = inputFormatter.date(from: lightInfo.results.sunset)!.timeIntervalSince(inputFormatter.date(from: lightInfo.results.goldenHour)!)
+            goldenHourEnd = inputFormatter.date(from: lightInfo.results.sunrise)!.addingTimeInterval(goldenHourDuration)
+        }
+        
+        //format dates as strings and load in dictionary
+        let outputFormatter = DateFormatter()
+        outputFormatter.dateFormat = "h:mm a"
+           
+        times["twilight"] = outputFormatter.string(from: twilight)
+        times["goldenHourStart"] = outputFormatter.string(from: goldenHourStart)
+        times["goldenHourEnd"] = outputFormatter.string(from: goldenHourEnd)
+        times["blueHourStart"] = outputFormatter.string(from: blueHourStart)
+        times["blueHourEnd"] = outputFormatter.string(from: blueHourEnd)
+        
+        return times
     }
+    
+    
     
     func getSunsetPrediction() {
         
     }
+    
     
     
     //util function mostly used for debugging
@@ -137,7 +183,7 @@ class PredictionsViewModel: ObservableObject {
         // Calculate the change in longitude
         let deltaLon = distance / (earthRadius * cos(latRad))
         
-        // Subtract deltaLon to get the new longitude 5 km west
+        // Subtract deltaLon to get the new longitude west
         let newLongitude = longitude - (deltaLon * 180 / .pi)
         
         return newLongitude
