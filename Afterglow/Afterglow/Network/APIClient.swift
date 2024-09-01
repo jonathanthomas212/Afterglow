@@ -30,9 +30,9 @@ class APIClient: NSObject {
         
         
         // Print raw data for debugging
-        if let rawDataString = String(data: data, encoding: .utf8) {
-            print("Raw data:", rawDataString)
-        }
+//        if let rawDataString = String(data: data, encoding: .utf8) {
+//            print("Raw data:", rawDataString)
+//        }
         
         guard (response as? HTTPURLResponse)?.statusCode == 200 else {
             throw APIError.badResponse

@@ -51,6 +51,12 @@ class PredictionsViewModel: ObservableObject {
                 print("forecast for: ", self.unixToLocalTime(hourlyForecast.dt))
                 print(hourlyForecast)
                 
+                
+                //get sunset quality predictions
+                let sunsetPrediction = self.getSunsetPrediction(hourlyForecast.clouds, hourlyForecast.humidity)
+                print(sunsetPrediction)
+                
+                
                 //temp labels
                 self.cloudCover = String(hourlyForecast.clouds)
                 self.visibility = String(hourlyForecast.visibility ?? 0) //for some reason the api sometimes doesnt include visibility??
@@ -152,8 +158,39 @@ class PredictionsViewModel: ObservableObject {
     
     
     
-    func getSunsetPrediction() {
+    //returns label (poor, fair, good, great), confidence percentage, description
+    func getSunsetPrediction(_ clouds: Int, _ humidity: Int) -> (String,String,String) {
         
+        let humidityThresh = 65
+        
+        //too cloudy: 0-24%
+        if clouds > 75 {
+            
+            let confidence = 100 - clouds
+            return ("Poor", String(confidence) + "%", "Sunset may not be visible due to cloud clover")
+        }
+        
+        //no clouds: 25-54%
+        if clouds < 30 {
+            
+            let confidence = 25 + clouds
+            return ("Fair", String(confidence) + "%", "Visible sunset but lack of clouds may make for a boring sunset")
+        }
+        
+        //good ammount of clouds
+        let normalizedHumidity = ((100 - humidity)/100) * (100-55) //relative humidy normalized to 55-100 scale
+        var confidence = 55 + normalizedHumidity
+        
+        if clouds >= 70 { //drop confidence if high clouds because it could go either way
+            confidence -= 10
+        }
+        
+        
+        if humidity > humidityThresh { //high humidy: good
+            return ("Good", String(confidence) + "%", "Good visibility and vibrance is expected")
+        } else { //low humidity: great
+            return ("Great", String(confidence) + "%", "Sunset is predicted to be great!")
+        }
     }
     
     
