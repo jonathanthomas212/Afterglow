@@ -11,11 +11,11 @@ class PredictionsViewModel: ObservableObject {
     
     //any changes auto refreshes views
     @Published var cloudCover: String = "Loading..."
-    @Published var visibility: String = "Loading..."
-    @Published var pressure: String = "Loading..."
     @Published var humidity: String = "Loading..."
+    @Published var sunsetQuality: String = "Loading..."
+    @Published var confidence: String = "Loading..."
     @Published var event: String = "Loading..." //sunset or sunrise
-    @Published var goldenHour: String = "Loading..."
+    
     
     
     
@@ -51,18 +51,15 @@ class PredictionsViewModel: ObservableObject {
                 print("forecast for: ", self.unixToLocalTime(hourlyForecast.dt))
                 print(hourlyForecast)
                 
-                
                 //get sunset quality predictions
                 let sunsetPrediction = self.getSunsetPrediction(hourlyForecast.clouds, hourlyForecast.humidity)
-                print(sunsetPrediction)
                 
-                
-                //temp labels
+                //update labels
                 self.cloudCover = String(hourlyForecast.clouds)
-                self.visibility = String(hourlyForecast.visibility ?? 0) //for some reason the api sometimes doesnt include visibility??
-                self.pressure = String(hourlyForecast.pressure)
                 self.humidity = String(hourlyForecast.humidity)
-                self.goldenHour = lightTimes["goldenHourStart"]!
+                self.sunsetQuality = sunsetPrediction.0
+                self.confidence = sunsetPrediction.1
+                
             }
             
         } catch {
