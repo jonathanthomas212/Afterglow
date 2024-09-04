@@ -160,8 +160,8 @@ class PredictionsViewModel: ObservableObject {
         
         let humidityThresh = 65
         
-        //too cloudy: 0-24%
-        if clouds > 75 {
+        //too cloudy: 0-25%
+        if clouds >= 75 {
             
             let confidence = 100 - clouds
             return ("Poor", String(confidence) + "%", "Sunset may not be visible due to cloud clover")
@@ -175,7 +175,7 @@ class PredictionsViewModel: ObservableObject {
         }
         
         //good ammount of clouds: >70%
-        let normalizedHumidity = ((100 - humidity)/100) * (100-70) //relative humidy normalized to 70-100 scale
+        let normalizedHumidity = ((100.0 - Double(humidity)) / 100.0) * (100.0 - 70.0) //relative humidy normalized to 70-100 scale
         var confidence = 70 + normalizedHumidity
        
         var lowConfidence = false

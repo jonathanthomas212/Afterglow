@@ -54,5 +54,35 @@ final class AfterglowTests: XCTestCase {
         
         XCTAssertEqual(newLon, -79.85082407651882, accuracy: 0.01)
     }
+    
+    func testGetSunsetPrediction() {
+        
+        let knownSunsets = [
+            (70,65,"Good"),
+            (75,87,"Poor"),
+            (40,60,"Great"),
+            (20,57,"Fair"),
+            (40,51,"Great"),
+            (75,60,"Poor"),
+            (100,96,"Poor"),
+            (40,70,"Good"),
+            (40,96,"Good"),
+            (0,64,"Fair"),
+            (75,86,"Poor"),
+            (40,58,"Great"),
+            (75,62,"Poor"),
+            (75,70,"Poor"),
+            (75,96,"Poor"),
+            (1,56,"Fair"),
+        ]
+        
+        let instance = PredictionsViewModel()
+        
+        for sunset in knownSunsets {
+            var quality = instance.getSunsetPrediction(sunset.0, sunset.1)
+            XCTAssertEqual(quality.0, sunset.2)
+        }
+        
+    }
 }
 
