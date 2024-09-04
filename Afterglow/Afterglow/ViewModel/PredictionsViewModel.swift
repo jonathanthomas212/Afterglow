@@ -123,7 +123,7 @@ class PredictionsViewModel: ObservableObject {
         
         if self.event == "Sunset" {
             
-            goldenHourStart = inputFormatter.date(from: lightInfo.results.goldenHour)!
+            goldenHourStart = inputFormatter.date(from: lightInfo.results.goldenHour)!.addingTimeInterval(-15 * 60)
             goldenHourEnd = inputFormatter.date(from: lightInfo.results.sunset)!
             twilight = inputFormatter.date(from: lightInfo.results.sunset)!
             blueHourStart = inputFormatter.date(from: lightInfo.results.sunset)!
@@ -137,7 +137,7 @@ class PredictionsViewModel: ObservableObject {
             goldenHourStart = inputFormatter.date(from: lightInfo.results.sunrise)!
             
             let goldenHourDuration = inputFormatter.date(from: lightInfo.results.sunset)!.timeIntervalSince(inputFormatter.date(from: lightInfo.results.goldenHour)!)
-            goldenHourEnd = inputFormatter.date(from: lightInfo.results.sunrise)!.addingTimeInterval(goldenHourDuration)
+            goldenHourEnd = inputFormatter.date(from: lightInfo.results.sunrise)!.addingTimeInterval(goldenHourDuration + 15*60)
         }
         
         //format dates as strings and load in dictionary
