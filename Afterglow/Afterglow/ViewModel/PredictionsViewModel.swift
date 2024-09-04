@@ -167,23 +167,25 @@ class PredictionsViewModel: ObservableObject {
             return ("Poor", String(confidence) + "%", "Sunset may not be visible due to cloud clover")
         }
         
-        //no clouds: 25-54%
+        //no clouds: 40-69%
         if clouds < 30 {
             
-            let confidence = 25 + clouds
+            let confidence = 40 + clouds
             return ("Fair", String(confidence) + "%", "Visible sunset but lack of clouds may make for a boring sunset")
         }
         
-        //good ammount of clouds
-        let normalizedHumidity = ((100 - humidity)/100) * (100-55) //relative humidy normalized to 55-100 scale
-        var confidence = 55 + normalizedHumidity
-        
+        //good ammount of clouds: >70%
+        let normalizedHumidity = ((100 - humidity)/100) * (100-70) //relative humidy normalized to 70-100 scale
+        var confidence = 70 + normalizedHumidity
+       
+        var lowConfidence = false
         if clouds >= 70 { //drop confidence if high clouds because it could go either way
-            confidence -= 10
+            confidence -= 15
+            lowConfidence = true
         }
         
         
-        if humidity > humidityThresh { //high humidy: good
+        if (humidity > humidityThresh) || lowConfidence { //high humidy: good
             return ("Good", String(confidence) + "%", "Good visibility and vibrance is expected")
         } else { //low humidity: great
             return ("Great", String(confidence) + "%", "Sunset is predicted to be great!")
