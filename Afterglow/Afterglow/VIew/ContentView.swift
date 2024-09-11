@@ -16,8 +16,7 @@ struct ContentView: View {
     var body: some View {
         
         ZStack(alignment: .top){
-            
-            Color.orange.opacity(0.6).edgesIgnoringSafeArea(.all)
+            Color.lightOrange.edgesIgnoringSafeArea(.all)
 
             LinearGradient(gradient: Gradient(colors: [Color.darkBlue.opacity(0.8), Color.clear]), startPoint: .top, endPoint: .bottom)
                 .edgesIgnoringSafeArea(.all)
@@ -59,5 +58,5 @@ struct ContentView: View {
 
 extension Color {
     static let darkBlue = Color(red: 0.1, green: 0.1, blue: 0.5) // Custom dark blue color
-    static let darkOrange = Color(red: 0.8627, green: 0.6588, blue: 0.4235) // Custom dark orange color
+    static let lightOrange = Color(red: 1.0, green: 0.768, blue: 0.4) // Custom light orange color
 }
