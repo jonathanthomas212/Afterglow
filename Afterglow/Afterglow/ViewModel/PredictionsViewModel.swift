@@ -12,8 +12,7 @@ class PredictionsViewModel: ObservableObject {
     //any changes auto refreshes views
     @Published var cloudCover: String = "Loading..."
     @Published var humidity: String = "Loading..."
-    @Published var sunsetQuality: String = "Loading..."
-    @Published var confidence: String = "Loading..."
+    @Published var sunsetQuality: (String,String,String) = ("Loading...", "Loading...", "Loading...")
     @Published var event: String = "Loading..." //sunset or sunrise
     
     
@@ -57,8 +56,8 @@ class PredictionsViewModel: ObservableObject {
                 //update labels
                 self.cloudCover = String(hourlyForecast.clouds)
                 self.humidity = String(hourlyForecast.humidity)
-                self.sunsetQuality = sunsetPrediction.0
-                self.confidence = sunsetPrediction.1
+                self.sunsetQuality = sunsetPrediction
+                
                 
             }
             

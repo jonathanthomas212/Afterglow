@@ -22,25 +22,48 @@ struct ContentView: View {
                 .edgesIgnoringSafeArea(.all)
             
             VStack {
+                
+                //location
+                HStack{
+                    Image(systemName: "location.fill")
+                    Text("Current Location")
+                }
                 Spacer()
-                Text("Event")
+                
+                //sunset quality graphic
+                if (viewModel.event == "Sunrise") {
+                    Image(systemName: "sunrise")
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                } else {
+                    Image(systemName: "sunset")
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                }
+                
+                //sunset quality info
+                Spacer()
                 Text(viewModel.event)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                Text(viewModel.sunsetQuality.0)
+                    .font(.largeTitle)
+                    .bold()
+                Text(viewModel.sunsetQuality.1)
                 Spacer()
-                Text("Cloud cover")
-                Text(viewModel.cloudCover)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                Text(viewModel.sunsetQuality.2)
+                    .multilineTextAlignment(.center)
                 Spacer()
-                Text("Humidity")
-                Text(viewModel.humidity)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                
+                //temp info for debugging sunset prediction
+                HStack {
+                    Text("Cloud Cover:")
+                    Text(viewModel.cloudCover)
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    Text("Humidity:")
+                    Text(viewModel.humidity)
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                }
                 Spacer()
-                Text("Sunset Quality")
-                Text(viewModel.sunsetQuality)
-                    .font(.title)
-                Text(viewModel.confidence)
-                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                Spacer()
+                
             }
             .foregroundColor(Color.white)
         .padding()
